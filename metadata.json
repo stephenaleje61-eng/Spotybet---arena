@@ -1,0 +1,6 @@
+{
+  "name": "SAFE PICKS ARENA",
+  "description": "Professional sports arena with real-time live scores, statistical match predictions, admin verified safe picks, worldwide chat, friend network, market, and dedicated bookmaker spaces.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

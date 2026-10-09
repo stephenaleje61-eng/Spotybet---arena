@@ -1,0 +1,151 @@
+{
+  "users": [
+    {
+      "id": "usr_admin_arena",
+      "email": "admin@safepicksarena.com",
+      "username": "ArenaChiefAdmin",
+      "passwordHash": "$2b$10$doczGvAGDcfIJNGbQ..E3eUDbG2Zw3FIyAN1O.EsHhqlmujqw.MF.",
+      "role": "admin",
+      "isVerified": true,
+      "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
+      "favoriteTeam": "Arsenal",
+      "favoriteBookmaker": "Bet9ja",
+      "bio": "Official Head Analyst & Lead Administrator at Safe Picks Arena. Delivering verified statistical banker picks daily.",
+      "reputation": 998,
+      "createdAt": "2026-10-09T09:16:02.337Z",
+      "updatedAt": "2026-10-09T09:16:02.337Z"
+    },
+    {
+      "id": "usr_1791537376465_7up7t",
+      "email": "fan@safepicks.com",
+      "username": "SuperBettor",
+      "passwordHash": "$2b$10$S7EdIMlfgVcV6piEWEFGSOtquHJ8TBsrcYRV26U7UU/i.VIlYJ29W",
+      "role": "user",
+      "isVerified": true,
+      "avatar": "https://api.dicebear.com/7.x/identicon/svg?seed=SuperBettor",
+      "favoriteTeam": "Arsenal",
+      "favoriteBookmaker": "Bet9ja",
+      "bio": "Sports enthusiast aiming for high accuracy safe picks in Safe Picks Arena.",
+      "reputation": 100,
+      "createdAt": "2026-10-09T09:16:16.465Z",
+      "updatedAt": "2026-10-09T09:16:19.708Z"
+    },
+    {
+      "id": "usr_1791537679650_i8832",
+      "email": "stephenaleje61@gmail.com",
+      "username": "Biostephen",
+      "passwordHash": "$2b$10$2Uy2L6H7I5Ju9ACdcX1LC.2BuClP7j04dKvxJ5XFF0Ub6n6bs6Mdi",
+      "role": "user",
+      "isVerified": true,
+      "avatar": "https://api.dicebear.com/7.x/identicon/svg?seed=Biostephen",
+      "favoriteTeam": "Arsenal",
+      "favoriteBookmaker": "Bet9ja",
+      "bio": "Sports enthusiast aiming for high accuracy safe picks in Safe Picks Arena.",
+      "reputation": 100,
+      "createdAt": "2026-10-09T09:21:19.650Z",
+      "updatedAt": "2026-10-09T09:21:35.943Z"
+    }
+  ],
+  "sessions": [
+    {
+      "token": "34d6644fcf3035b4e6c54d1ac9b0fae0c2885c01982bef4ec056cb5af06afcf3",
+      "userId": "usr_1791537376465_7up7t",
+      "createdAt": "2026-10-09T09:16:16.466Z",
+      "expiresAt": 1794129376466
+    },
+    {
+      "token": "c5d86adff349c47576a1de82fca914a12f64468b15af8658bf29c472c1ffb02d",
+      "userId": "usr_admin_arena",
+      "createdAt": "2026-10-09T09:16:26.048Z",
+      "expiresAt": 1794129386048
+    },
+    {
+      "token": "afe548ecb3c102591c72cb8ef052a116106b8b8e75505b4d2f8a8c7d4283d210",
+      "userId": "usr_1791537679650_i8832",
+      "createdAt": "2026-10-09T09:21:19.650Z",
+      "expiresAt": 1794129679650
+    }
+  ],
+  "picks": [],
+  "messages": [
+    {
+      "id": "msg_1791537383035_lw5v",
+      "userId": "usr_1791537376465_7up7t",
+      "username": "SuperBettor",
+      "avatar": "https://api.dicebear.com/7.x/identicon/svg?seed=SuperBettor",
+      "role": "user",
+      "content": "Arsenal 1X + Over 1.5 is a solid banker for tonight! Who is backing this?",
+      "bookmakerTag": "Bet9ja",
+      "timestamp": "2026-10-09T09:16:23.035Z",
+      "reactions": {}
+    },
+    {
+      "id": "msg_1791537712496_hnz8",
+      "userId": "usr_1791537679650_i8832",
+      "username": "Biostephen",
+      "avatar": "https://api.dicebear.com/7.x/identicon/svg?seed=Biostephen",
+      "role": "user",
+      "content": "Hello",
+      "timestamp": "2026-10-09T09:21:52.496Z",
+      "reactions": {}
+    }
+  ],
+  "friendRequests": [
+    {
+      "id": "freq_1791537388690",
+      "fromUserId": "usr_1791537376465_7up7t",
+      "fromUsername": "SuperBettor",
+      "fromAvatar": "https://api.dicebear.com/7.x/identicon/svg?seed=SuperBettor",
+      "toUserId": "usr_admin_arena",
+      "status": "accepted",
+      "createdAt": "2026-10-09T09:16:28.690Z"
+    }
+  ],
+  "friendships": [
+    {
+      "id": "fr_1791537391573_tgx8h",
+      "user1Id": "usr_1791537376465_7up7t",
+      "user2Id": "usr_admin_arena",
+      "createdAt": "2026-10-09T09:16:31.573Z"
+    }
+  ],
+  "notifications": [
+    {
+      "id": "notif_1791537679651",
+      "userId": "usr_1791537679650_i8832",
+      "type": "system",
+      "title": "Welcome to Safe Picks Arena! ⚽",
+      "message": "Your account has been created. Please use verification code [ 917908 ] to verify your email. Enjoy 100% free statistical safe picks!",
+      "read": false,
+      "createdAt": "2026-10-09T09:21:19.651Z"
+    },
+    {
+      "id": "notif_fa_1791537391573",
+      "userId": "usr_1791537376465_7up7t",
+      "type": "friend_accepted",
+      "title": "Friend Request Accepted! 🎉",
+      "message": "ArenaChiefAdmin accepted your friend request. You can now chat and track picks together.",
+      "read": false,
+      "createdAt": "2026-10-09T09:16:31.573Z"
+    },
+    {
+      "id": "notif_fr_1791537388690",
+      "userId": "usr_admin_arena",
+      "type": "friend_request",
+      "title": "New Friend Request 🤝",
+      "message": "SuperBettor sent you a friend request in Safe Picks Arena.",
+      "read": false,
+      "createdAt": "2026-10-09T09:16:28.690Z"
+    },
+    {
+      "id": "notif_1791537376466",
+      "userId": "usr_1791537376465_7up7t",
+      "type": "system",
+      "title": "Welcome to Safe Picks Arena! ⚽",
+      "message": "Your account has been created. Please use verification code [ 632320 ] to verify your email. Enjoy 100% free statistical safe picks!",
+      "read": false,
+      "createdAt": "2026-10-09T09:16:16.466Z"
+    }
+  ],
+  "marketSlips": []
+}
