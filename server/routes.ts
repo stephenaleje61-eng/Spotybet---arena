@@ -431,37 +431,54 @@ router.post('/auth/register', authLimiter, async (req: Request, res: Response) =
       return res.status(400).json({ error: 'Email, username, and password are required' });
     }
 
-    if (password.length < 6) {
+    const cleanEmail = String(email).trim().toLowerCase();
+    const cleanUsername = String(username).trim();
+    const rawPassword = String(password);
+
+    if (rawPassword.length < 6) {
       return res.status(400).json({ error: 'Password must be at least 6 characters long' });
     }
 
+    if (cleanUsername.length < 3 || cleanUsername.length > 25) {
+      return res.status(400).json({ error: 'Username must be between 3 and 25 characters long' });
+    }
+
+    if (!/^[a-zA-Z0-9_.-]+$/.test(cleanUsername)) {
+      return res.status(400).json({ error: 'Username can only contain letters, numbers, underscores, and hyphens' });
+    }
+
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
+    if (!emailRegex.test(cleanEmail)) {
       return res.status(400).json({ error: 'Please enter a valid email address' });
     }
 
-    if (db.users.findByEmail(email)) {
+    if (db.users.findByEmail(cleanEmail)) {
       return res.status(400).json({ error: 'An account with this email already exists' });
     }
 
-    if (db.users.findByUsername(username)) {
+    if (db.users.findByUsername(cleanUsername)) {
       return res.status(400).json({ error: 'This username is already taken' });
     }
 
-    const passwordHash = await hashPassword(password);
+    const passwordHash = await hashPassword(rawPassword);
     const verificationCode = generateVerificationCode();
+
+    const allowedBookmakers = ['Bet9ja', 'SportyBet', 'MSport', 'Football.com', 'Other'] as const;
+    const validatedBookmaker = allowedBookmakers.includes(favoriteBookmaker as any)
+      ? (favoriteBookmaker as typeof allowedBookmakers[number])
+      : 'Bet9ja';
 
     const newUser: User = {
       id: 'usr_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7),
-      email: email.trim().toLowerCase(),
-      username: username.trim(),
+      email: cleanEmail,
+      username: cleanUsername,
       passwordHash,
       role: 'user',
       isVerified: false,
       verificationCode,
-      avatar: `https://api.dicebear.com/7.x/identicon/svg?seed=${encodeURIComponent(username)}`,
-      favoriteTeam: favoriteTeam || 'Football Fan',
-      favoriteBookmaker: favoriteBookmaker || 'Bet9ja',
+      avatar: `https://api.dicebear.com/7.x/identicon/svg?seed=${encodeURIComponent(cleanUsername)}`,
+      favoriteTeam: favoriteTeam ? String(favoriteTeam).trim() : 'Football Fan',
+      favoriteBookmaker: validatedBookmaker,
       bio: 'Sports enthusiast aiming for high accuracy safe picks in Safe Picks Arena.',
       reputation: 100,
       createdAt: new Date().toISOString(),

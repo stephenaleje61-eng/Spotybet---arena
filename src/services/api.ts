@@ -11,7 +11,11 @@ import {
   BookmakerInfo,
 } from '../types';
 
-const API_BASE = '/api';
+// Configure API base URL: defaults to local /api or respects external VITE_API_BASE_URL if deployed across separate hosts
+const customBase = typeof import.meta !== 'undefined' && import.meta.env?.VITE_API_BASE_URL
+  ? String(import.meta.env.VITE_API_BASE_URL).replace(/\/$/, '')
+  : '';
+const API_BASE = customBase ? `${customBase}/api` : '/api';
 
 class ApiService {
   private token: string | null = null;
@@ -44,17 +48,43 @@ class ApiService {
   }
 
   private async request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
-    const res = await fetch(`${API_BASE}${endpoint}`, {
-      ...options,
-      headers: {
-        ...this.getHeaders(),
-        ...options.headers,
-      },
-    });
+    const targetUrl = `${API_BASE}${endpoint}`;
+    let res: Response;
+    try {
+      res = await fetch(targetUrl, {
+        ...options,
+        headers: {
+          ...this.getHeaders(),
+          ...options.headers,
+        },
+      });
+    } catch (networkErr: any) {
+      throw new Error(
+        `Unable to reach Safe Picks Arena API at ${targetUrl}. Please verify backend server status or network connection.`
+      );
+    }
 
-    const data = await res.json().catch(() => ({}));
+    let data: any = {};
+    const contentType = res.headers.get('content-type') || '';
+    if (contentType.includes('application/json')) {
+      data = await res.json().catch(() => ({}));
+    } else {
+      const text = await res.text().catch(() => '');
+      try {
+        data = JSON.parse(text);
+      } catch {
+        data = { error: text || undefined };
+      }
+    }
+
     if (!res.ok) {
-      throw new Error(data.error || `Request failed with status ${res.status}`);
+      const errorMessage =
+        data.error ||
+        data.message ||
+        (res.status === 404
+          ? `Endpoint not found (404) at ${targetUrl}. Please ensure backend API routes are active.`
+          : `Request failed with status ${res.status}`);
+      throw new Error(errorMessage);
     }
     return data as T;
   }

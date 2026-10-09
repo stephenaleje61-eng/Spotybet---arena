@@ -106,8 +106,32 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   // Handle Register
   const handleRegisterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email.trim() || !username.trim() || !password) {
-      setError('Please fill in all required fields.');
+    const cleanEmail = email.trim();
+    const cleanUsername = username.trim();
+
+    if (!cleanEmail || !cleanUsername || !password) {
+      setError('Please fill in all required fields (Email, Username, Password).');
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(cleanEmail)) {
+      setError('Please enter a valid email address (e.g. striker@example.com).');
+      return;
+    }
+
+    if (cleanUsername.length < 3 || cleanUsername.length > 25) {
+      setError('Username must be between 3 and 25 characters long.');
+      return;
+    }
+
+    if (!/^[a-zA-Z0-9_.-]+$/.test(cleanUsername)) {
+      setError('Username can only contain letters, numbers, underscores, and hyphens.');
+      return;
+    }
+
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters long.');
       return;
     }
 
@@ -115,25 +139,26 @@ export const AuthModal: React.FC<AuthModalProps> = ({
     setError(null);
     try {
       const res = await onRegister({
-        email: email.trim(),
-        username: username.trim(),
+        email: cleanEmail,
+        username: cleanUsername,
         password,
-        favoriteTeam,
-        favoriteBookmaker,
+        favoriteTeam: favoriteTeam.trim() || 'Football Fan',
+        favoriteBookmaker: favoriteBookmaker || 'Bet9ja',
       });
 
       // Switch to verify email mode
       setActiveVerificationNotice(
         res.verificationCode
-          ? `Account created! Verification code: [ ${res.verificationCode} ]`
+          ? `Welcome to Arena! Your verification code is: [ ${res.verificationCode} ]`
           : 'Account created! Enter the verification code sent to your email.'
       );
       if (res.verificationCode) {
         setVerificationCode(res.verificationCode);
       }
+      setSuccessMessage('Account created successfully! Please verify your email.');
       setMode('verify');
     } catch (err: any) {
-      setError(err.message || 'Registration failed');
+      setError(err.message || 'Registration failed. Please try again.');
     } finally {
       setLoading(false);
     }

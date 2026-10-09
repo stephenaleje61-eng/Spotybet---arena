@@ -481,7 +481,7 @@ export function restoreBackupById(backupId: string): boolean {
 // -------------------------------------------------------------
 // PERIODIC EXPIRY PRUNING (SESSIONS & LOGS)
 // -------------------------------------------------------------
-setInterval(() => {
+const pruningTimer = setInterval(() => {
   const now = Date.now();
   let expiredFound = false;
   for (const [token, session] of indexSessionsByToken.entries()) {
@@ -499,6 +499,9 @@ setInterval(() => {
     persistDatabase();
   }
 }, 5 * 60 * 1000); // every 5 minutes
+if (pruningTimer.unref) {
+  pruningTimer.unref();
+}
 
 // -------------------------------------------------------------
 // PUBLIC DATABASE API (INDEXED & PAGINATED)
