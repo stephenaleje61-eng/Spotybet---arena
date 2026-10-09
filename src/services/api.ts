@@ -310,6 +310,37 @@ class ApiService {
   async getBookmakersInfo() {
     return this.request<{ bookmakers: BookmakerInfo[] }>('/bookmakers/info');
   }
+
+  // --- Engine Diagnostics, Health & Admin Backups ---
+  async getHealth() {
+    return this.request<any>('/health');
+  }
+
+  async getMetrics() {
+    return this.request<any>('/metrics');
+  }
+
+  async getAdminSystemStats() {
+    return this.request<any>('/admin/system-stats');
+  }
+
+  async getAdminBackups() {
+    return this.request<{ backups: any[] }>('/admin/backups');
+  }
+
+  async createAdminBackup(label?: string) {
+    return this.request<{ message: string; backup: any }>('/admin/backups', {
+      method: 'POST',
+      body: JSON.stringify({ label }),
+    });
+  }
+
+  async restoreAdminBackup(backupId: string) {
+    return this.request<{ message: string }>('/admin/backups/restore', {
+      method: 'POST',
+      body: JSON.stringify({ backupId }),
+    });
+  }
 }
 
 export const api = new ApiService();

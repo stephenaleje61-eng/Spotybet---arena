@@ -114,7 +114,7 @@ export const WorldwideChat: React.FC<WorldwideChatProps> = ({
           <div>
             <div className="text-[10px] text-slate-400 uppercase font-bold">Online Worldwide</div>
             <div className="text-sm font-black text-white font-mono-sport">
-              {onlineCount > 0 ? `${onlineCount.toLocaleString()} Sports Fans` : '1,420 Active Fans'}
+              {onlineCount > 0 ? `${onlineCount.toLocaleString()} Sports Fans` : '1 Fan Connected'}
             </div>
           </div>
         </div>

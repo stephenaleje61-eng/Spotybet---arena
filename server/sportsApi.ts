@@ -120,13 +120,24 @@ export interface MatchAnalysis {
   }>;
 }
 
-// In-memory cache to handle traffic spikes and respect upstream rate limits
+// In-memory bounded cache to handle traffic spikes and respect upstream rate limits
 interface CacheEntry<T> {
   data: T;
   cachedAt: number;
   ttlMs: number;
 }
+const MAX_CACHE_ENTRIES = 500;
 const cache = new Map<string, CacheEntry<any>>();
+
+// Periodic cleanup of expired cache entries every 60 seconds
+setInterval(() => {
+  const now = Date.now();
+  for (const [key, entry] of cache.entries()) {
+    if (now - entry.cachedAt > entry.ttlMs) {
+      cache.delete(key);
+    }
+  }
+}, 60 * 1000);
 
 function getCached<T>(key: string): T | null {
   const entry = cache.get(key);
@@ -139,6 +150,11 @@ function getCached<T>(key: string): T | null {
 }
 
 function setCached<T>(key: string, data: T, ttlMs: number): void {
+  // Prevent unbounded memory growth under huge query variations
+  if (cache.size >= MAX_CACHE_ENTRIES) {
+    const oldestKey = cache.keys().next().value;
+    if (oldestKey) cache.delete(oldestKey);
+  }
   cache.set(key, { data, cachedAt: Date.now(), ttlMs });
 }
 

@@ -25,6 +25,7 @@ import { FriendsModal } from './components/FriendsModal';
 import { NotificationsModal } from './components/NotificationsModal';
 import { AuthModal } from './components/AuthModal';
 import { UserProfileModal } from './components/UserProfileModal';
+import { SystemHealthModal } from './components/SystemHealthModal';
 import {
   ShieldAlert,
   Flame,
@@ -36,6 +37,7 @@ import {
   CheckCircle,
   HelpCircle,
   Info,
+  Activity,
 } from 'lucide-react';
 
 export default function App() {
@@ -54,7 +56,7 @@ export default function App() {
   const [friends, setFriends] = useState<User[]>([]);
   const [friendRequests, setFriendRequests] = useState<FriendRequest[]>([]);
   const [notifications, setNotifications] = useState<Notification[]>([]);
-  const [onlineChatCount, setOnlineChatCount] = useState<number>(1420);
+  const [onlineChatCount, setOnlineChatCount] = useState<number>(1);
 
   // Modal States
   const [isAuthOpen, setIsAuthOpen] = useState(false);
@@ -63,6 +65,7 @@ export default function App() {
   const [isFriendsOpen, setIsFriendsOpen] = useState(false);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [isPublishModalOpen, setIsPublishModalOpen] = useState(false);
+  const [isSystemHealthOpen, setIsSystemHealthOpen] = useState(false);
   const [editingPick, setEditingPick] = useState<SafePick | null>(null);
   const [selectedAnalysis, setSelectedAnalysis] = useState<MatchAnalysis | null>(null);
   const [isAnalysisOpen, setIsAnalysisOpen] = useState(false);
@@ -391,6 +394,7 @@ export default function App() {
           setEditingPick(null);
           setIsPublishModalOpen(true);
         }}
+        onOpenSystemHealth={() => setIsSystemHealthOpen(true)}
         onlineChatCount={onlineChatCount}
       />
 
@@ -584,13 +588,29 @@ export default function App() {
             <span className="text-yellow-400/90 font-bold">18+ GAMBLE RESPONSIBLY.</span>{' '}
             Predictions are statistical probability estimates derived from historical form and Poisson distributions, and are not guaranteed wins. Safe Picks Arena is 100% free with no VIP subscription fees.
           </div>
-          <div className="text-slate-600 font-mono-sport shrink-0">
-            © 2026 SAFE PICKS ARENA · Engineered for High Concurrency
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => setIsSystemHealthOpen(true)}
+              className="inline-flex items-center gap-1.5 text-yellow-400 hover:text-yellow-300 font-bold text-xs cursor-pointer transition-colors"
+            >
+              <Activity className="w-3.5 h-3.5" />
+              <span>Engine Diagnostics &amp; 5M Cloud Architecture</span>
+            </button>
+            <span className="text-slate-600 font-mono-sport shrink-0 hidden sm:inline">
+              © 2026 SAFE PICKS ARENA · Engineered for High Concurrency
+            </span>
           </div>
         </div>
       </footer>
 
       {/* 5. Modals Container */}
+      {/* System Health & Architecture Modal */}
+      <SystemHealthModal
+        isOpen={isSystemHealthOpen}
+        onClose={() => setIsSystemHealthOpen(false)}
+        isAdmin={currentUser?.role === 'admin'}
+      />
+
       {/* Auth Modal */}
       <AuthModal
         isOpen={isAuthOpen}

@@ -13,6 +13,7 @@ import {
   User as UserIcon,
   ChevronDown,
   Sparkles,
+  Activity,
 } from 'lucide-react';
 
 interface HeaderProps {
@@ -27,6 +28,7 @@ interface HeaderProps {
   onOpenFriends: () => void;
   onOpenProfile: () => void;
   onOpenAdminPublish: () => void;
+  onOpenSystemHealth: () => void;
   onlineChatCount: number;
 }
 
@@ -42,6 +44,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenFriends,
   onOpenProfile,
   onOpenAdminPublish,
+  onOpenSystemHealth,
   onlineChatCount,
 }) => {
   const unreadNotifications = notifications.filter((n) => !n.read).length;
@@ -230,6 +233,15 @@ export const Header: React.FC<HeaderProps> = ({
                 {pendingFriendRequests}
               </span>
             )}
+          </button>
+
+          {/* Engine & Scalability Diagnostics */}
+          <button
+            onClick={onOpenSystemHealth}
+            className="relative p-2 rounded-lg bg-[#121319] hover:bg-[#1a1b24] border border-[#22242d] hover:border-yellow-400/40 text-slate-300 hover:text-yellow-400 transition-colors cursor-pointer"
+            title="Engine Telemetry & 5M Scalability Diagnostics"
+          >
+            <Activity className="w-4 h-4 text-yellow-400" />
           </button>
 
           {/* User Profile or Login */}
